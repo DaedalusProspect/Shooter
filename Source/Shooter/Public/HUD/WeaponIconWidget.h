@@ -30,6 +30,7 @@ class SHOOTER_API UWeaponIconWidget : public UUserWidget
 
 	TSharedRef<SWidget> RebuildWidget() override;
 
+	/* Copied from Parent. Unable to inherit. */
 	/** Get World calls can be expensive for Widgets, we speed them up by caching the last found world until it goes away. */
 	mutable TWeakObjectPtr<UWorld> CachedWorld;
 
@@ -51,4 +52,12 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = Game)
 	UShooterGameInstance* GetShooterGameInstance();
+
+
+	UFUNCTION(BlueprintPure, Category = "Game UI")
+	UButton* GetButton() { return WeaponButton; };
+
+	UFUNCTION(BlueprintPure, Category = "Game UI")
+	UImage* GetImage() { return WeaponImage; };
+
 };
