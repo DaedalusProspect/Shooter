@@ -17,7 +17,7 @@ UWeaponIconWidget::UWeaponIconWidget(const FObjectInitializer& ObjectInitializer
 
 TSharedRef<SWidget> UWeaponIconWidget::RebuildWidget()
 {
-	UPanelWidget* RootWidget;
+
 	RootWidget = WidgetTree->ConstructWidget<UOverlay>(UOverlay::StaticClass(), TEXT("Root Overlay"));
 	UOverlaySlot* RootWidgetSlot = Cast<UOverlaySlot>(RootWidget->Slot);
 

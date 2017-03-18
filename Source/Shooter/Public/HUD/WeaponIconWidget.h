@@ -25,10 +25,12 @@ class SHOOTER_API UWeaponIconWidget : public UUserWidget
 		UWeaponIconWidget(const FObjectInitializer& ObjectInitializer);
 		UWeaponIconWidget(const FObjectInitializer& ObjectInitializer, int32 WeaponRefIndex, bool InInventory);
 
+
+	UPanelWidget* RootWidget;
 	UButton* WeaponButton;
 	UImage* WeaponImage;
 
-	TSharedRef<SWidget> RebuildWidget() override;
+	virtual TSharedRef<SWidget> RebuildWidget() override;
 
 	/* Copied from Parent. Unable to inherit. */
 	/** Get World calls can be expensive for Widgets, we speed them up by caching the last found world until it goes away. */
