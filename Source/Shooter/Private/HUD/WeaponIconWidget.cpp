@@ -12,6 +12,8 @@ UWeaponIconWidget::UWeaponIconWidget(const FObjectInitializer& ObjectInitializer
 {
 	WeaponItemRefIndex = WeaponRefIndex;
 	bIsInInventory = InInventory;
+
+
 }
 
 
@@ -49,17 +51,17 @@ TSharedRef<SWidget> UWeaponIconWidget::RebuildWidget()
 		WeaponButton->WidgetStyle.Hovered.ImageSize = FVector2D(150.0f, 150.0f);
 		WeaponButton->WidgetStyle.Normal.ImageSize = FVector2D(150.0f, 150.0f);
 		WeaponButton->WidgetStyle.Pressed.ImageSize = FVector2D(150.0f, 150.0f);
-		//WeaponButton->OnClicked.Add(OnWeaponItemClickedEvent);
+
+		WeaponButton->OnClicked.AddDynamic(this, &UWeaponIconWidget::OnWeaponItemClicked);
 
 		UPanelSlot* Slot1 = RootWidget->AddChild(WeaponButton);
 		UOverlaySlot* ButtonSlot = Cast<UOverlaySlot>(Slot1);
 
 		// Create the image overlay
 		WeaponImage = WidgetTree->ConstructWidget<UImage>(UImage::StaticClass());
-		if (BP.Num() != 0)
+		if (GI->GetBackpack().Num() != 0)
 		{
-			WeaponImage->SetBrushFromTexture(BP[0].BackpackImage, false);
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::FromInt(BP.Num()));
+			WeaponImage->SetBrushFromTexture(GI->GetBackpack()[WeaponItemRefIndex].BackpackImage, false);
 			
 		}
 		WeaponImage->SetColorAndOpacity(FLinearColor(1.0, 1.0, 1.0, 1.0));
@@ -122,10 +124,21 @@ class UWorld* UWeaponIconWidget::GetWorld() const
 	return nullptr;
 }
 
-void UWeaponIconWidget::OnWeaponItemClicked(int32 WeaponIndex, UWeaponIconWidget* WeaponWidget)
+void UWeaponIconWidget::OnWeaponItemClicked()
 {
 	if (OnWeaponItemClickedEvent.IsBound())
 	{
-		OnWeaponItemClickedEvent.Broadcast(WeaponIndex, WeaponWidget);
+		OnWeaponItemClickedEvent.Broadcast(WeaponItemRefIndex, this);
 	}
+}
+
+void UWeaponIconWidget::UpdateImage()
+{
+	UShooterGameInstance* GI = Cast<UShooterGameInstance>(GetWorld()->GetGameInstance());
+	if (GI)
+	{
+		//TODO Fix this
+		// WeaponImage->SetBrushFromTexture(GI->GetBackpack()[WeaponItemRefIndex].BackpackImage, false);
+	}
+
 }

@@ -50,7 +50,7 @@ public:
 	FWeaponItemClicked OnWeaponItemClickedEvent;
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-	void OnWeaponItemClicked(int32 WeaponIndex, UWeaponIconWidget* WeaponWidget);
+	void OnWeaponItemClicked();
 
 	UFUNCTION(BlueprintPure, Category = Game)
 	UShooterGameInstance* GetShooterGameInstance();
@@ -61,5 +61,8 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Game UI")
 	UImage* GetImage() { return WeaponImage; };
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateImage();
 
 };
